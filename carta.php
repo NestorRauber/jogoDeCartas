@@ -83,7 +83,7 @@ class Carta
 print "Em um jogo de uno, cada jogador começa com 7 cartas aleatórias, seu objetivo é ficar sem nenhuma carta em mãos. Para isso você deve descartar quando possivel e comprar quando necessário.\n";
 print "Iremos jogar uno no php, seu adversário começa com as 7 cartas que você ja sabe quais são.\n";
 print "Seu objetivo é descobrir a carta da vez sem errar 7 vezes.\n";
-print "Para isso, você pode pedir dicas e ser um frangote, ou chutar até acabar. Obs: as cartas não se repetem.";
+print "Para isso, você pode pedir dicas e ser um frangote, ou chutar até acabar. Obs: as cartas não se repetem e você deve chutar apenas o símbolo.\n";
 
 //Programa Principal
 
@@ -100,71 +100,104 @@ $UNO = [
 $sorteador = array_rand($UNO);
 $cartaEsclh = $UNO[$sorteador];
 
-print "====UNO====";
+print "=============UNO=============\n";
 foreach ($UNO as $u) {
     print "Símbolo: " . $u->getSimbolo();
     print " | Cor: " . $u->getCor();
+    print "\n";
 }
 
-print "============";
+print "==============================\n";
 
 
 $vida = 7;
 $opcao = 0;
 $cartas = 7;
+$gritar;
 
 do {
 
-    $opcao = readline(
-        "Escolha uma opção:\n
+    echo "\nEscolha uma opção:\n
     (1) Chutar\n
     (2) Dica\n
     (3) Rever cartas disponiveis\n
-    (0) Desistir\n"
-    );
+    (0) Desistir\n";
+    $opcao = readline();
 
     switch ($opcao) {
-        case 1: $palpite = readline();
-                if ($palpite == $cartaEsclh->getSimbolo() and $cartas>1) {
-                    $cartas --;
-                    print "Parabéns! Só faltam " . $cartas;
-                    //Eliminar num acertado
+        case 1: 
+            
+            $palpite = readline("Qual é seu palpite? ");
+            print"\n";
 
-                    $sorteador = array_rand($UNO);
-                    $cartaEsclh = $UNO[$sorteador];
+            if ($palpite == $cartaEsclh->getSimbolo() and $cartas==1) {
 
-                }
+                
+                $gritar = readline("O que está esperando??? Grite UNO\n");
 
-                else{
-                    $vida--;
-                    print "Voce errou! Você tem " . $vida . "chance(s) ainda.";
-                    
+                 system('clear');
 
-                }
+                 print "Parabéns, você é um vencedor.";
+
+
+                
+                
+            }
+            if ($palpite == $cartaEsclh->getSimbolo() and $cartas>1) {
+                $cartas --;
+                system('clear');
+                print "Parabéns! Só faltam " . $cartas;
+                //Eliminar num acertado
+
+                array_splice($UNO, $sorteador, 1);
+
+                $sorteador = array_rand($UNO);
+                $cartaEsclh = $UNO[$sorteador];
+
+            }
+
+            else {
+                $vida--;
+                system('clear');
+                print "Voce errou! Você tem " . $vida . " chance(s) ainda.";
+
+
+                
+
+            }
             break;
 
         case 2:
-            print"Dica: ". $cartaEsclh->getDica();
+            system('clear');
+            print"\nDica: ". $cartaEsclh->getDica();
+            print"\n";
             break;
 
         case 3:
-            print "====UNO====";
+            system('clear');
+            print "=============UNO=============\n";
             foreach ($UNO as $u) {
                 print "Símbolo: " . $u->getSimbolo();
                 print " | Cor: " . $u->getCor();
+                print "\n";
             }
 
-            print "============";
+            print "==============================\n";
             break;
 
         case 0:
-            print "Você é um perdedor frangote";
+            print "Você é um perdedor frangote.\n";
             break;
 
         default:
-            print "Apenas selecione a opção desejada.";
+            print "Apenas selecione a opção desejada.\n";
             break;
     }
 
+    
 
-} while ($opcao != 0 or $vida = 0);
+} while ($opcao != 0 or $vida == 0 or $gritar == "UNO" );
+
+if ($vida==0) {
+    print "Você é muito ruim no que faz!";
+}
