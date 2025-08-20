@@ -196,7 +196,7 @@ do {
 
     
 
-} while ($opcao != 0 or $vida == 0 or $gritar == "UNO" );
+} while ($opcao != 0 or $vida == 0 or $gritar != "UNO" );
 
 if ($vida==0) {
     print "Você é muito ruim no que faz!";
