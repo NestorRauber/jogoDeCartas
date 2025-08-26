@@ -120,7 +120,7 @@ do {
     echo "\nEscolha uma opção:\n
     (1) Chutar\n
     (2) Dica\n
-    (3) Rever cartas disponiveis\n
+    (3) Rever cartas disponíveis\n
     (0) Desistir\n";
     $opcao = readline();
 
@@ -133,11 +133,14 @@ do {
             if ($palpite == $cartaEsclh->getSimbolo() and $cartas==1) {
 
                 
-                $gritar = readline("O que está esperando??? Grite UNO\n");
+                $gritar = readline("O que está esperando??? Grite UNO");
+                print"\n";
 
                  system('clear');
 
                  print "Parabéns, você é um vencedor.";
+
+                 break 2;
 
 
                 
@@ -158,8 +161,13 @@ do {
 
             else {
                 $vida--;
+                if($vida==0){
+                  break 2;
+                }
                 system('clear');
                 print "Voce errou! Você tem " . $vida . " chance(s) ainda.";
+
+               
 
 
                 
@@ -196,8 +204,8 @@ do {
 
     
 
-} while ($opcao != 0 or $vida == 0 or $gritar != "UNO" );
+} while ($opcao != 0 );
 
 if ($vida==0) {
-    print "Você é muito ruim no que faz!";
+    print "Você é muito ruim no que faz!\n";
 }
